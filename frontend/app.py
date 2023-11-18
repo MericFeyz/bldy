@@ -23,15 +23,17 @@ x,y=np.meshgrid(np.arange(ncols),np.arange(nrows))
 ######
 app_dash.layout = html.Div(children=[
     html.H1("How safe are you from flooding?", style={"color": "white", "display": "flex", "flex-direction": "column"}),
-    
+    html.H2("H2 efenimm?"),
+
+
     # Plotly graph
 
     html.Div(id="graph_container", children=[dcc.Graph(id='example-graph'),
-    dcc.Slider(0, 10, 1, value=5, marks=None, tooltip={"placement": "bottom", "always_visible": True})], 
-    style={"width": "50vw"}
+    dcc.Slider(0, 10, 1, value=5, marks=None, tooltip={"placement": "bottom", "always_visible": True}),
+    html.Div(id="dynamic-div", children="Dynamic!", style={"color": "white"})], 
+    style={"height": "70%", "display": "flex", "flex-direction": "row"}
     ),
 
-    html.Div(id="dynamic-div", children="Dynamic!"),
     html.Div(id="dynamic-div-foto", children="Dynamic!"),
 
     dcc.Textarea(
@@ -40,11 +42,15 @@ app_dash.layout = html.Div(children=[
         ),
 
     html.Button('Enter your PLZ!', id='PLZ-button', n_clicks=0),
-    html.Div(id='PLZ-out', style={'whiteSpace': 'pre-line'}),
+    html.Div(id='PLZ-out', style={'whiteSpace': 'pre-line', "color": "white"}),
+
+    dcc.Interval(id='interval-component', interval=2 * 1000, n_intervals=0),
 ],
 style={"background-color": "black", "height": "100vh", "width": "100vw",
-           "text-color": "white", "text-align": "center", "position": "absolute"}
+           "text-color": "white", "text-align": "center", "position": "absolute", "overflow": "hidden !important"}
 )
+
+
     
 @app_dash.callback(
     Output('dynamic-div', 'children'),
