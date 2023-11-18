@@ -7,7 +7,6 @@ import plotly.graph_objects as go
 import geopandas as gpd
 from shapely.geometry import Point
 import time
-from numba import jit
 
 TRANSFORM_MATRIX = None
 ELEVATION_MATRIX = None
@@ -26,7 +25,6 @@ def get_first_river_height(xyz_matrix, river_coordinates):
             if river_coordinate.contains(point):
                 return x, y, value
 
-@jit
 def add_overflow(xyz_matrix, ref_point, overflow):
     ref_x = ref_point[0]
     ref_y = ref_point[1]
@@ -40,7 +38,8 @@ def add_overflow(xyz_matrix, ref_point, overflow):
             for i in range(-3, 4):
                 for j in range(-3, 4):
                     xyz_matrix[ref_x + i, ref_y + j] = -1 * (ref_z + overflow)
-        except:
+        except Exception as e:
+            print(e)
             return
     else:
         return
