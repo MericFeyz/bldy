@@ -26,7 +26,7 @@ app_dash.layout = html.Div(children=[
     # Plotly graph
 
     html.Div(id="graph_container", children=[dcc.Graph(id='example-graph', figure=fig),
-    dcc.Slider(0, 10, 1, value=5, marks=None, tooltip={"placement": "bottom", "always_visible": True}),
+    dcc.Slider(0, 20, 5, value=0, marks=None, tooltip={"placement": "bottom", "always_visible": True}),
     html.Div(id="dynamic-div", children="Dynamic!", style={"color": "white"})], 
     style={"height": "70%", "display": "flex", "flex-direction": "row"}
     ),
