@@ -12,6 +12,9 @@ TRANSFORM_MATRIX = None
 ELEVATION_MATRIX = None
 ISAR_COORD = None
 
+MOCK_LOCATION = (300, 300)
+
+
 def get_coordinates(x, y):
     return TRANSFORM_MATRIX * (x, y)
 
@@ -108,8 +111,16 @@ def load():
     ISAR_COORD = sf[sf.name == "Isar"]["geometry"]
 
 
-def run(overflow :int):
+def run(overflow: int):
+    """
+    return values
+
+    figure: figure
+    boolean: alive
+    float: distance
+    """
     sys.setrecursionlimit(100000)
+
     elevation_matrix_flood = copy.deepcopy(ELEVATION_MATRIX)
     print("Detecting river altitude...")
     river_ref_point = get_first_river_height(elevation_matrix_flood, ISAR_COORD)
@@ -130,10 +141,10 @@ def run(overflow :int):
     # x, y = np.linspace(0, 1, sh_0), np.linspace(0, 1, sh_1)
     fig = go.Figure(data=[go.Surface(z=z, x=x, y=y)])
     fig.update_layout(title='Isar Flood Map', autosize=False,
-                scene = dict(
-                    xaxis = dict(showbackground=False, showticklabels=False, ),
-                    yaxis = dict(showbackground=False, showticklabels=False, ),
-                    zaxis = dict(nticks=5, range=[200,800], showbackground=False,showticklabels=False,),
+                scene=dict(
+                    xaxis=dict(showbackground=False, showticklabels=False, ),
+                    yaxis=dict(showbackground=False, showticklabels=False, ),
+                    zaxis=dict(nticks=5, range=[200,800], showbackground=False,showticklabels=False,),
                     xaxis_title='',
                     yaxis_title='',
                     zaxis_title='',),
@@ -144,7 +155,11 @@ def run(overflow :int):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
     )
-    return fig
+    return (
+        fig,
+        ELEVATION_MATRIX[MOCK_LOCATION] > elevation_matrix_flood[MOCK_LOCATION],
+        ELEVATION_MATRIX[MOCK_LOCATION] - elevation_matrix_flood[MOCK_LOCATION],
+    )
 
 
 # if __name__ == "__main__":

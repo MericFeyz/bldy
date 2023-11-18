@@ -9,7 +9,7 @@ from dash import Dash, html, dcc, Output, Input,State
 from gis import load, run
 
 load()
-fig = run(15)
+fig = run(0)
 
 app = Flask(__name__)
 app_dash = Dash(__name__, server=app, url_base_pathname='/')
