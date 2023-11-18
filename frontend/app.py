@@ -13,7 +13,7 @@ app_dash = Dash(__name__, server=app, url_base_pathname='/')
 
 #####
 
-geotiff_path = f'C:/Users/yigit/Desktop/UNI/RCI/1.Semester/hackatum/bldy/data/test2.tif'
+geotiff_path = f'C:/Users/burak/OneDrive/Desktop/hackatum23/710_5287.tif'
 with rasterio.open(geotiff_path) as src:
     elevation = src.read(1) 
     
@@ -22,26 +22,16 @@ x,y=np.meshgrid(np.arange(ncols),np.arange(nrows))
 
 ######
 app_dash.layout = html.Div(children=[
-    html.H1("How safe are you from flooding?"),
+    html.H1("How safe are you from flooding?", style={"color": "white", "display": "flex", "flex-direction": "column"}),
     
     # Plotly graph
-    dcc.Graph(
-        id='example-graph'
+
+    html.Div(id="graph_container", children=[dcc.Graph(id='example-graph'),
+    dcc.Slider(0, 10, 1, value=5, marks=None, tooltip={"placement": "bottom", "always_visible": True})], 
+    style={"width": "50vw"}
     ),
-    
-    # Changing div
-    html.Div(id='dynamic-div', children='This div will change dynamically.'),
-    
-    dcc.Slider(0, 10, 1, value=5, marks=None,
-    tooltip={"placement": "bottom", "always_visible": True}),
-    
-    #Callback to update the changing div
-    """dcc.Interval(
-        id='interval-component',
-        interval=2 * 1000,  # in milliseconds
-        n_intervals=0
-    )"""
-])
+], style={"background-color": "black", "height": "100vh", "width": "100vw",
+           "text-color": "white", "text-align": "center", "position": "absolute"})
 
 @app_dash.callback(
     Output('dynamic-div', 'children'),
