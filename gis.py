@@ -1,7 +1,9 @@
+
 import rasterio
 from rasterio.transform import from_origin
 import numpy as np
-from mayavi import mlab
+
+import plotly.graph_objects as go
 
 # Load the GeoTIFF data using rasterio
 geotiff_path = f'C:/Users/yigit/Desktop/UNI/RCI/1.Semester/hackatum/bldy/data/test2.tif'
@@ -10,13 +12,13 @@ with rasterio.open(geotiff_path) as src:
     
 nrows,ncols=elevation.shape
 x,y=np.meshgrid(np.arange(ncols),np.arange(nrows))
-z=elevation
 
-z_test=z
-z_test[z_test<=505]=505
 
-mesh=mlab.mesh(x,y,z_test,colormap='terrain')
-desired_elevation = 510
-
-# Show the plot
-mlab.show()
+z = elevation
+sh_0, sh_1 = z.shape
+#x, y = np.linspace(0, 1, sh_0), np.linspace(0, 1, sh_1)
+fig = go.Figure(data=[go.Surface(z=z, x=x, y=y)])
+fig.update_layout(title='Mt Bruno Elevation', autosize=False,
+                  width=500, height=500,
+                  margin=dict(l=65, r=50, b=65, t=90))
+fig.show()
