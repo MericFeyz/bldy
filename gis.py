@@ -25,7 +25,11 @@ def get_first_river_height(xyz_matrix, river_coordinates):
             if river_coordinate.contains(point):
                 return x, y, value
 
+
 def add_overflow(xyz_matrix, ref_point, overflow):
+    if overflow == 0:
+        return
+
     ref_x = ref_point[0]
     ref_y = ref_point[1]
     ref_z = ref_point[2]
