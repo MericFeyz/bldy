@@ -57,16 +57,16 @@ app_dash.layout = html.Div(children=[
     # Plotly graph
     html.Div(children = [html.Div(id="graph_container", children=[dcc.Graph(id='3d-graph', figure=fig, style={"padding-right": "40px"}),
     dcc.Slider(0, 20, 5, value=0,id='slider', marks=None, tooltip={"placement": "bottom", "always_visible": True}),
-    html.Div(id="dynamic-div", children="Dynamic!", style={"color": "white"})],
+    ],
     style={"display": "flex", "flex-direction": "column"}
     )] + [prompt], style={"display": "flex", "flex-direction": "row"}),
 
     dcc.Textarea(
             id='PLZ-field',
-            style={'width': '20%', 'height': 70},
+            style={'width': '20%', 'height': '20px'},
         ),
 
-    html.Button('Enter your PLZ!', id='PLZ-button', n_clicks=0),
+    html.Button('Check!', id='PLZ-button', n_clicks=0),
     html.Div(id='PLZ-out', style={'whiteSpace': 'pre-line', "color": "white"}),
 
 ],

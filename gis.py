@@ -143,7 +143,7 @@ def run(overflow: int):
     # sh_0, sh_1 = z.shape
     # x, y = np.linspace(0, 1, sh_0), np.linspace(0, 1, sh_1)
     fig = go.Figure(data=[go.Surface(z=z, x=x, y=y)])
-    fig.update_layout(title='Isar Flood Map', title_x=0.5, autosize=False,
+    fig.update_layout(title=dict(text='Isar Flood Map', x=0.5, font_size=32), autosize=False,
                 scene=dict(
                     xaxis=dict(showbackground=False, showticklabels=False, ),
                     yaxis=dict(showbackground=False, showticklabels=False, ),
