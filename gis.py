@@ -143,21 +143,26 @@ def run(overflow: int):
     # sh_0, sh_1 = z.shape
     # x, y = np.linspace(0, 1, sh_0), np.linspace(0, 1, sh_1)
     fig = go.Figure(data=[go.Surface(z=z, x=x, y=y)])
-    fig.update_layout(title='Isar Flood Map', autosize=False,
+    fig.update_layout(title='Isar Flood Map', title_x=0.5, autosize=False,
                 scene=dict(
                     xaxis=dict(showbackground=False, showticklabels=False, ),
                     yaxis=dict(showbackground=False, showticklabels=False, ),
-                    zaxis=dict(nticks=5, range=[200,800], showbackground=False,showticklabels=False,),
+                    zaxis=dict(nticks=5, range=[400,600], showbackground=False,showticklabels=False,),
                     xaxis_title='',
                     yaxis_title='',
                     zaxis_title='',),
-                  width=500, height=500,
+                  width=750, height=750,
                   margin=dict(l=65, r=50, b=65, t=90))
 
     fig.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
     )
+    tempX = MOCK_LOCATION[0]
+    tempY = MOCK_LOCATION[1]
+    tempZ = ELEVATION_MATRIX[tempX][tempY]
+    fig.add_trace(go.Scatter3d(x=[tempX], y=[tempY], z=[tempZ]))
+    fig.update_traces(marker_size=7, marker_color="#51f542",  selector=dict(type='scatter3d'))
     return (
         fig,
         ELEVATION_MATRIX[MOCK_LOCATION] > elevation_matrix_flood[MOCK_LOCATION],
@@ -165,15 +170,8 @@ def run(overflow: int):
     )
 
 
-# if __name__ == "__main__":
-#     sys.setrecursionlimit(100000)
-#     load()
-#     fig1=run(15)
-#     print("Its over")
-#     sys.setrecursionlimit(100000)
-#     fig2=run(20)
-#     sys.setrecursionlimit(100000)
-#     fig3=run(25)
-#     fig1.show()
-#     fig2.show()
-#     fig3.show()
+if __name__ == "__main__":
+    
+    load()
+    fig1, _ , _=run(0)
+    fig1.show()
