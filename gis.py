@@ -12,7 +12,7 @@ TRANSFORM_MATRIX = None
 ELEVATION_MATRIX = None
 ISAR_COORD = None
 
-MOCK_LOCATION = (300, 300)
+MOCK_LOCATION = (900, 900)
 
 
 def get_coordinates(x, y):
@@ -165,7 +165,7 @@ def run(overflow: int):
     fig.update_traces(marker_size=7, marker_color="#51f542",  selector=dict(type='scatter3d'))
     return (
         fig,
-        ELEVATION_MATRIX[MOCK_LOCATION] > elevation_matrix_flood[MOCK_LOCATION],
+        ELEVATION_MATRIX[MOCK_LOCATION] >= elevation_matrix_flood[MOCK_LOCATION],
         ELEVATION_MATRIX[MOCK_LOCATION] - elevation_matrix_flood[MOCK_LOCATION],
     )
 
