@@ -7,6 +7,7 @@ import rasterio
 import numpy as np
 from dash import Dash, html, dcc, Output, Input,State
 from gis import load, run
+import sys
 
 load()
 fig, is_alive, elevation_difference = run(0)
@@ -25,10 +26,10 @@ app_dash.layout = html.Div(children=[
 
     # Plotly graph
 
-    html.Div(id="graph_container", children=[dcc.Graph(id='example-graph', figure=fig),
-    dcc.Slider(0, 20, 5, value=0, marks=None, tooltip={"placement": "bottom", "always_visible": True}),
+    html.Div(id="graph_container", children=[dcc.Graph(id='3d-graph', figure=fig),
+    dcc.Slider(0, 20, 5, value=0,id='slider', marks=None, tooltip={"placement": "bottom", "always_visible": True}),
     html.Div(id="dynamic-div", children="Dynamic!", style={"color": "white"})], 
-    style={"height": "70%", "display": "flex", "flex-direction": "row"}
+    style={"height": "70%", "display": "flex", "flex-direction": "column"}
     ),
 
     html.Div(id="dynamic-div-foto", children="Dynamic!"),
@@ -41,7 +42,6 @@ app_dash.layout = html.Div(children=[
     html.Button('Enter your PLZ!', id='PLZ-button', n_clicks=0),
     html.Div(id='PLZ-out', style={'whiteSpace': 'pre-line', "color": "white"}),
 
-    dcc.Interval(id='interval-component', interval=2 * 1000, n_intervals=0),
 ],
 style={"background-color": "black", "height": "100vh", "width": "100vw",
            "text-color": "white", "text-align": "center", "position": "absolute", "overflow": "hidden !important"}
@@ -80,6 +80,17 @@ def update_div_text(n):
 def update_output(n_clicks, value):
     if n_clicks > 0:
         return 'You have entered: \n{}'.format(value)
+    
+@app_dash.callback(
+    Output('3d-graph', 'figure'),
+    Input('slider', 'value'),
+)
+def update_map_slider( value):
+    print(value)
+    global is_alive,elevation_difference
+    sys.setrecursionlimit(100000)
+    fig,is_alive,elevation_difference=run(value)
+    return fig
 
 if __name__ == '__main__':
     app.run(debug=True)

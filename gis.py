@@ -30,6 +30,9 @@ def get_first_river_height(xyz_matrix, river_coordinates):
 
 
 def add_overflow(xyz_matrix, ref_point, overflow):
+    #print(f'xyz:{xyz_matrix}')
+    #print(f'ref_point:{ref_point}')
+    #print(f'overflow:{overflow}')
     if overflow == 0:
         return
 
@@ -127,7 +130,7 @@ def run(overflow: int):
 
     print("Simulating flow...")
     add_overflow(elevation_matrix_flood, river_ref_point, overflow)
-
+    #print('hey')
     for (x, y), value in np.ndenumerate(elevation_matrix_flood):
         if elevation_matrix_flood[x, y] < 0:
             elevation_matrix_flood[x, y] = -1 * elevation_matrix_flood[x, y]
